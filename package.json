@@ -4,16 +4,12 @@
   "description": "QA Code Quiz",
   "main": "webpack.config.js",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --mode=production",
-    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --open",
-    "start:test": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --config webpack.test.config.js",
-    "test": "yarn test:unit && yarn test:end-to-end",
-    "test:end-to-end": "start-server-and-test 'yarn start:test' http://localhost:8081 'cypress run'",
-    "test:unit": "jest",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "test:e2e:debug": "playwright test --debug",
-    "test:e2e:report": "playwright show-report"
+    "build": "NODE_OPTIONS='--openssl-legacy-provider' webpack --mode=production",
+    "start": "NODE_OPTIONS='--openssl-legacy-provider' webpack-dev-server --open",
+    "start:server": "node ./mockedAPI/index.js",
+    "test": "playwright test",
+    "test:ui": "playwright test --project=chromium --project=firefox --project=webkit",
+    "test:api": "playwright test --project=api-tests"
   },
   "author": "",
   "license": "",

@@ -32,21 +32,35 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
-  /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      testMatch: '**/login*.spec.ts',
     },
 
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
+      testMatch: '**/login*.spec.ts',
     },
 
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
+      testMatch: '**/login*.spec.ts',
+    },
+
+    {
+      name: 'api-tests',
+      testMatch: '**/api*.spec.ts',
+      use: {
+        baseURL: 'http://localhost:9999',
+        extraHTTPHeaders: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
     },
 
     /* Test against mobile viewports. */
@@ -71,9 +85,18 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
+  webServer: [
+    // Frontend server for UI tests
+    {
+      command: 'npm run start',
+      url: 'http://localhost:8080',
+      reuseExistingServer: !process.env.CI,
+    },
+    // Backend server for API tests
+    {
+      command: 'node server.js',
+      url: 'http://localhost:9999',
+      reuseExistingServer: !process.env.CI,
+    },
+  ],
 });
