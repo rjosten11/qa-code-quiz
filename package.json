@@ -4,8 +4,9 @@
   "description": "QA Code Quiz",
   "main": "webpack.config.js",
   "scripts": {
-    "build": "NODE_OPTIONS='--openssl-legacy-provider' webpack --mode=production",
-    "start": "NODE_OPTIONS='--openssl-legacy-provider' webpack-dev-server --open",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --mode=production",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --open",
+    "start:test": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --config webpack.test.config.js",
     "start:server": "node ./mockedAPI/index.js",
     "test": "playwright test",
     "test:ui": "playwright test --project=chromium --project=firefox --project=webkit",
